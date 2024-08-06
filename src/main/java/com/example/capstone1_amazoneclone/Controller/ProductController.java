@@ -81,7 +81,7 @@ public class ProductController {
 
                                                                   // ----- Extra End Point --------
 
-    @PostMapping("/wishlist/{productId}/{userId}")//Add Product to WishList
+   @PostMapping("/wishlist/{productId}/{userId}")//Add Product to WishList
     public ResponseEntity wishlist( @PathVariable String productId , @PathVariable String userId ) {
 
        if (productService.addProductToWishList(productId,userId) != null){
@@ -101,21 +101,25 @@ public class ProductController {
         return ResponseEntity.status(200).body(wishlist);
     }
 
+            @GetMapping("/card/{userId}/{productId}")
+            public ResponseEntity getCard( @PathVariable String userId , @PathVariable String productId ,@PathVariable String merchantId ) {
+           String mseeageGift=productService.giftCard(userId,productId,merchantId);
+           if (mseeageGift.equalsIgnoreCase("You have not spent enough to qualify for a gift card.")){
+              return ResponseEntity.status(200).body(new ApiResponse("Gift Card Empty"));
+          }
+          return ResponseEntity.status(400).body(new ApiResponse(mseeageGift));
+            }
 
+    @GetMapping("/track-order/{userId}/{password}/{productId}/{merchantId}")
+    public ResponseEntity trackOrder(@PathVariable String userId, @PathVariable String password, @PathVariable String productId , @PathVariable String merchantId) {
+        String orderStatus = productService.trackOrderMethod( userId,  password,  productId,  merchantId);
 
-    @GetMapping("/track-order/{userId}/{password}/{track}")
-    public ResponseEntity trackOrder(@PathVariable String userId, @PathVariable String password, @PathVariable String track) {
-        String orderStatus = productService.trackOrderMethod(userId, password, track);
-
-        if (orderStatus.equals("User not found") || orderStatus.equals("Incorrect password") ||
-                orderStatus.equals("Please write 'track' correctly to proceed") ||orderStatus.equals("No orders available to track") ) {
+        if (orderStatus.equals("User not found") || orderStatus.equals("Incorrect password")
+                ||orderStatus.equals("No orders available to track") ) {
             return ResponseEntity.status(400).body(orderStatus);
         }
-
         return ResponseEntity.status(200).body(orderStatus);
     }
-
-
 
 
     @GetMapping("/get-product/{productId}") // get product by id
@@ -129,18 +133,15 @@ public class ProductController {
     }
 
 
+    @GetMapping("/card/{userId}/{productId}/{merchantId}")
+    public ResponseEntity gift(@PathVariable String userId, @PathVariable String productId, @PathVariable String merchantId) {
+        String giftMessage = productService.giftCard( userId,  productId,  merchantId);
 
-
-
-
-
-
-
-//          // third Extra End Point
-//     @GetMapping("/Best-Seller/{topN}")// user want to see best Seller
-//    public List<Product> getBestSellingProducts(@PathVariable int topN) {
-//    return productService.getBestSellingProducts(topN);
-//     }
+        if (giftMessage.equals("You have not spent enough to qualify for a gift card.")) {
+            return ResponseEntity.status(400).body(new ApiResponse("Gift Card Empty"));
+        }
+        return ResponseEntity.status(200).body(new ApiResponse(giftMessage));
+    }
 
 
 
