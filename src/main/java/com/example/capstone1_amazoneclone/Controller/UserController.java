@@ -19,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
-
+                                      // --- CRUD -------
 
     @GetMapping("/get")// get All Users
     public ResponseEntity getUser() {
@@ -58,44 +58,6 @@ public class UserController {
         }
         return ResponseEntity.status(400).body(" Sorry User Not Found");
     }
-
-
-
-                              // ----- Extra End Point ------
-
-    @GetMapping("/card/{userId}/{productPrice}")
-    public ResponseEntity gift(@PathVariable String userId, @PathVariable double productPrice) {
-        String giftMessage = userService.giftCard(userId, productPrice);
-
-        if (giftMessage.equals("You have not spent enough to qualify for a gift card.")) {
-            return ResponseEntity.status(400).body(new ApiResponse("Gift Card Empty"));
-        }
-        return ResponseEntity.status(200).body(new ApiResponse(giftMessage));
-    }
-
-
-
-    @GetMapping("/log-in/{phoneNumber}") // User login with PhoneNumber and get a verification Code
-    public ResponseEntity logIn(@PathVariable String phoneNumber) {
-        String verificationResult = userService.login(phoneNumber);
-        if (verificationResult.equals("Phone number is not correct")) {
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, User Not Found"));
-        }
-        return ResponseEntity.status(200).body(new ApiResponse(verificationResult));
-    }
-
-
-
-     @GetMapping("/support-team/{username}/{description}")
-     public ResponseEntity supportTeam(@PathVariable String username, @PathVariable String description) {
-
-        if(userService.connectToSupportCenter(username,description)== null){
-
-            return ResponseEntity.status(400).body(new ApiResponse("Sorry, User Not Found"));
-        }
-        return ResponseEntity.status(200).body(userService.connectToSupportCenter(username,description));
-     }
-
 
     // get user by id
     @GetMapping("/get-user/{userid}")
