@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/order")
 public class OrderController {
 
+    /*
 @GetMapping("/get/card")
     public String getCard() {
 
@@ -16,7 +17,7 @@ public class OrderController {
     String giftCardDetails = "Congratulations! You have a gift card worth 200 Riyal.";
 
         return giftCardDetails;
+}*/
 
-
-}
+    
 }
