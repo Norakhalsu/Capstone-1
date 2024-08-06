@@ -24,8 +24,7 @@ public class Product {
     @NotEmpty(message = " Category Id must not be Empty  ")
     private String categoryId;
 
-    @Min(value = 0, message = "Number of purchases must be zero or positive")
-    private int numberOfPurchases = 0; // Add this field
+   
 
 
 }
