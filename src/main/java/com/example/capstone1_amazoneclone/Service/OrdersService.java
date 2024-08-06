@@ -9,11 +9,10 @@ import java.util.ArrayList;
 @Service
 public class OrdersService {
 
-    ArrayList<Orders> orders = new ArrayList<Orders>();
+  //  ArrayList<Orders> orders = new ArrayList<Orders>();
 
 
-                            // ----- Extra End Point -------
-
+/*
     // method to generate Order Number to Track
     public  static int generateOrderNumber() {
         // logic to generate a track number
@@ -27,7 +26,7 @@ public class OrdersService {
         } else {
             return orders.get(orders.size() - 1); // Return the latest order from the list
         }
-    }
+    }*/
 
 
 
